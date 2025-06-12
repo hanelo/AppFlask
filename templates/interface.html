@@ -1,65 +1,77 @@
-<html>
+<!DOCTYPE html>
+<html lang="fr">
 <head>
-    <title>Interface de Simulationde <title>
+    <meta charset="UTF-8">
+    <title>Interface de Simulation</title>
+
+    <!-- Load your external CSS from static -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
     <style>
         body {
             background-image: url("{{ url_for('static', filename='oujdairpot.png') }}");
             background-repeat: no-repeat;
-            background-position: center center;
-            font: 400 14px 'Calibri', 'Arial';
-            padding: 20px;
-            text-align: center;
-
+            background-size: cover;
+            background-position: center;
+            font: 400 14px 'Calibri', 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
         }
 
-</style>
+        .container-form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+    </style>
 </head>
 <body>
-    <div class="container-form">
-   
+
+    <!-- ONDA logo -->
     <img src="{{ url_for('static', filename='logo-onda.png') }}" alt="logo" class="logoonda">
 
-    <h1>Simulation- Postes aux frontières de de</h1>
-    {% if error %}
-        <p class="error">{{ error }}</p>
-    {% endif %}
-    <form action="/simulate" method="post" onsubmit="return validateForm()">
-        <label>Nombre de passagers:</label>
-        <input type="number" id="passengers" name="passengers" placeholder="Nombre de passagers" required>
+    <!-- Form container -->
+    <div class="container-form">
+        <form action="/simulate" method="post" onsubmit="return validateForm()">
+            <h1>Simulation - Postes aux frontières</h1>
 
-        <label>Temps de traitement par passager (en minutes):</label>
-        <input type="number" name="processing_time" placeholder="Temps de traitement par passager" required>
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% endif %}
 
-        <label>Nombre de ressources dans le processus PAF:</label>
-        <input type="number" id="num_resources" name="num_resources" placeholder="Nombre de ressources" required>
+            <label>Nombre de passagers:</label>
+            <input type="number" id="passengers" name="passengers" placeholder="Nombre de passagers" required>
 
+            <label>Temps de traitement par passager (en minutes):</label>
+            <input type="number" name="processing_time" placeholder="Temps de traitement par passager" required>
 
+            <label>Nombre de ressources dans le processus PAF:</label>
+            <input type="number" id="num_resources" name="num_resources" placeholder="Nombre de ressources" required>
 
-        <label>Position choisie dans la file d'attente:</label>
-        <input type="number" id="chosen_position" name="chosen_position" placeholder="Position choisie" required>
+            <label>Position choisie dans la file d'attente:</label>
+            <input type="number" id="chosen_position" name="chosen_position" placeholder="Position choisie" required>
 
-        <div class="button-container">
-            <button type="submit">Simuler</button>
-        </div>
-    </form>
+            <div class="button-container">
+                <button type="submit">Simuler</button>
+            </div>
+        </form>
+    </div>
 
     <script>
         function validateForm() {
-            var passengers = parseInt(document.getElementById("passengers").value);
-            var numResources = parseInt(document.getElementById("num_resources").value);
-            var queuePosition = parseInt(document.getElementById("queue_position").value);
-            var maxQueuePosition = Math.floor(passengers / numResources);
+            const passengers = parseInt(document.getElementById("passengers").value);
+            const numResources = parseInt(document.getElementById("num_resources").value);
+            const queuePosition = parseInt(document.getElementById("chosen_position").value);
+            const maxQueuePosition = Math.floor(passengers / numResources);
 
             if (isNaN(queuePosition) || queuePosition <= 0 || queuePosition > maxQueuePosition) {
-                alert("Veuillez saisir un nombre de passagers divisé par le nombre de ressources et compris entre 1 et " + maxQueuePosition + ".");
+                alert("Veuillez saisir une position valide (entre 1 et " + maxQueuePosition + ").");
                 return false;
             }
 
             return true;
         }
     </script>
-</div>
 </body>
 </html>
