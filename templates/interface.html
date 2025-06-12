@@ -5,7 +5,7 @@
 
     <style>
         body {
-            background-image: url("/static/oujdairpot.png");
+            background-image: url("{{ url_for('static', filename='oujdairpot.png') }}");
             background-repeat: no-repeat;
             background-position: center center;
             font: 400 14px 'Calibri', 'Arial';
@@ -19,7 +19,7 @@
 <body>
     <div class="container-form">
    
-    <img src="/static/logo-onda.png" alt="logo" class="logoonda">
+    <img src="{{ url_for('static', filename='logo-onda.png') }}" alt="logo" class="logoonda">
 
     <h1>Simulation- Postes aux frontières</h1>
     {% if error %}
