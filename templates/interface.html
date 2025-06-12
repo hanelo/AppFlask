@@ -4,16 +4,17 @@
     <meta charset="UTF-8">
     <title>Interface de Simulation</title>
 
-    <!-- Load your external CSS from static -->
+    <!-- External style -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
+    <!-- Inline style for background only -->
     <style>
         body {
             background-image: url("{{ url_for('static', filename='oujdairpot.png') }}");
-            background-repeat: no-repeat;
             background-size: cover;
-            background-position: center;
-            font: 400 14px 'Calibri', 'Arial', sans-serif;
+            background-repeat: no-repeat;
+            background-position: center center;
+            font-family: 'Calibri', 'Arial', sans-serif;
             margin: 0;
             padding: 0;
         }
@@ -24,16 +25,32 @@
             align-items: center;
             height: 100vh;
         }
+
+        .form-box {
+            max-width: 500px;
+            width: 100%;
+            background: #ecf0f3;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            background-color: #00588b;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
 
-    <!-- ONDA logo -->
     <img src="{{ url_for('static', filename='logo-onda.png') }}" alt="logo" class="logoonda">
 
-    <!-- Form container -->
     <div class="container-form">
-        <form action="/simulate" method="post" onsubmit="return validateForm()">
+        <form action="/simulate" method="post" onsubmit="return validateForm()" class="form-box">
             <h1>Simulation - Postes aux frontières</h1>
 
             {% if error %}
@@ -69,7 +86,6 @@
                 alert("Veuillez saisir une position valide (entre 1 et " + maxQueuePosition + ").");
                 return false;
             }
-
             return true;
         }
     </script>
